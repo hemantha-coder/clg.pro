@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Tax Invoice Generator</title>
+    <link rel="stylesheet" href="C:\Users\heman\Desktop\MAMA\mama.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Tax Invoice Generator</h1>
+            <p class="subtitle">e-Invoice Compatible</p>
+        </div>
+
+        <div class="invoice-container">
+            <!-- Invoice Form -->
+            <div class="form-section">
+                <h2>Invoice Details</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" id="customerName" placeholder="Enter customer name" value="Kiran Enterprises">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Customer Address</label>
+                        <input type="text" id="customerAddress" placeholder="Enter address" value="12th Cross, HSR Layout">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Customer GSTIN/UIN</label>
+                        <input type="text" id="customerGSTIN" placeholder="29AAFFC8126N1ZZ" value="29AAFFC8126N1ZZ">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>State Name & Code</label>
+                        <input type="text" id="customerState" placeholder="Karnataka, Code: 29" value="Karnataka, Code: 29">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Invoice No.</label>
+                        <input type="text" id="invoiceNo" value="SHB/456/20">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Invoice Date</label>
+                        <input type="date" id="invoiceDate" value="2020-12-20">
+                    </div>
+                </div>
+
+                <!-- Goods Entry Section -->
+                <div class="goods-section">
+                    <h3>Goods Details</h3>
+                    
+                    <div class="goods-form">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" id="goodsDesc" placeholder="Description of goods">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>HSN/SAC</label>
+                            <input type="text" id="hsnCode" placeholder="1005">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" id="quantity" min="1" value="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Rate (₹)</label>
+                            <input type="number" id="rate" min="0" step="0.01" value="500">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Per</label>
+                            <select id="per">
+                                <option value="No">No</option>
+                                <option value="Kg">Kg</option>
+                                <option value="Ltr">Ltr</option>
+                                <option value="Box">Box</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Disc %</label>
+                            <input type="number" id="discount" min="0" max="100" value="0">
+                        </div>
+                        
+                        <button onclick="addGoods()" class="btn-add">Add Item</button>
+                    </div>
+                </div>
+
+                <!-- Goods List -->
+                <div class="goods-list">
+                    <table id="goodsTable">
+                        <thead>
+                            <tr>
+                                <th>Sl No</th>
+                                <th>Description</th>
+                                <th>HSN/SAC</th>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Per</th>
+                                <th>Disc %</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="goodsBody">
+                            <!-- Dynamic rows will be added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Invoice Preview -->
+            <div class="invoice-preview" id="invoicePreview">
+                <div class="invoice-header">
+                    <h2>TAX INVOICE</h2>
+                    <span class="einvoice-badge">e-Invoice</span>
+                </div>
+
+                <div class="invoice-meta">
+                    <div class="meta-left">
+                        <p><strong>IRN:</strong> sf1df90406b92db26a52816deb5c6b5256d9375e6-0dc4226653cc23ebc595</p>
+                        <p><strong>Ack No.:</strong> 112010036563310</p>
+                        <p><strong>Ack Date:</strong> <span id="previewAckDate"><placeholder>21-Dec-20</placeholder></span></p>
+                    </div>
+                </div>
+
+                <div class="company-details">
+                    <div class="company-left">
+                        <placeholder>
+                        <h3>Subaruhi Hardwares, Bangalore</h3>
+                        <p>HSR Layout, Bangalore</p>
+                        <p>GSTIN/UIN: 29AAACCT3705E000</p>
+                        <p>State Name: Karnataka, Code: 29</p>
+                        </placeholder>
+                    </div>
+                    <div class="invoice-details">
+                        <p><strong>Invoice No.</strong> <span id="previewInvoiceNo">SHB/456/20</span></p>
+                        <p><strong>Dated</strong> <span id="previewInvoiceDate">20-Dec-20</span></p>
+                    </div>
+                </div>
+
+                <div class="customer-details">
+                    <h4>Consignee (Ship to)</h4>
+                    <p id="previewCustomerName"><placeholder>Kiran Enterprises</placeholder></p>
+                    <p id="previewCustomerAddress"><placeholder>12th Cross, HSR Layout</placeholder></p>
+                    <p><strong>GSTIN/UIN:</strong> <span id="previewCustomerGSTIN" placeholder="29AAFFC8126N1ZZ"></span></p>
+                    <p><strong>State Name:</strong> <span id="previewCustomerState" ><placeholder="Karnataka, Code: 29"></span></p>
+                </div>
+
+                <table class="invoice-items">
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Description of Goods</th>
+                            <th>HSN/SAC</th>
+                            <th>Qty</th>
+                            <th>Rate</th>
+                            <th>per</th>
+                            <th>Disc %</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="previewItems">
+                        <!-- Preview items will be added here -->
+                    </tbody>
+                </table>
+
+                <div class="amount-section">
+                    <div class="amount-chargeable">
+                        <p><strong>Amount Chargeable (in words):</strong></p>
+                        <p id="amountInWords">Indian Rupee Four Thousand One Hundred Thirty Only</p>
+                    </div>
+                    
+                    <table class="tax-table">
+                        <thead>
+                            <tr>
+                                <th>HSN/SAC</th>
+                                <th>Taxable Value</th>
+                                <th>Central Tax</th>
+                                <th>State Tax</th>
+                                <th>Total Tax</th>
+                            </tr>
+                        </thead>
+                        <tbody id="previewTax">
+                            <!-- Tax calculation will be added here -->
+                        </tbody>
+                    </table>
+                    
+                    <div class="tax-amount">
+                        <p><strong>Tax Amount (in words):</strong> <span id="taxAmountWords">Indian Rupee Six Hundred Thirty Only</span></p>
+                    </div>
+                </div>
+
+                <div class="invoice-footer">
+                    <p class="disclaimer">We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.</p>
+                    <div class="signature">
+                        <p>Authorised Signatory</p>
+                        <p class="computer-generated">This is a Computer Generated Invoice</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button onclick="calculateTotal()" class="btn-calculate">Calculate</button>
+            <button onclick="downloadInvoice()" class="btn-download">Download PDF</button>
+            <button onclick="printInvoice()" class="btn-print">Print Invoice</button>
+            <button onclick="saveToDatabase()" class="btn-save">Save to Database</button>
+        </div>
+    </div>
+
+    <script src="C:\Users\heman\Desktop\MAMA\mama.js"></script>
+</body>
+</html>
